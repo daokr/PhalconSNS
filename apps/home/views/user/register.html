@@ -1,0 +1,158 @@
+<link href="{{APP_STATIC_CSS}}/validate.css" rel="stylesheet" />
+<script src="{{PUBLIC}}/js/validate/jquery.validateid.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	var validator = $("#signupform").validate({
+		onkeyup: false,
+		rules:{
+			email: {
+				required: true,
+				email: true,
+				remote: "{{url('home/user/checkuser/email')}}"
+			},
+			password: {
+				required: true,
+				minlength: 6
+			},
+			repassword: {
+				required: true,
+				minlength: 6,
+				equalTo: "#password"
+			},
+			username:{
+				required: true,
+				minlength: 3,
+				maxlength: 12,
+				remote:"{{url('home/user/checkuser/username')}}"
+			}
+		},
+		messages: {
+			email: {
+					required: "请输入Email地址",
+					email: "请输入一个正确的Email地址",
+					remote:jQuery.format("Email已经存在，请更换其他Email")
+			},
+			password: {
+				required: "请输入密码",
+				minlength: jQuery.format("至少输入6个字符")
+			},
+			repassword: {
+				required: "请重复输入密码",
+				minlength: jQuery.format("两次输入密码不一致"),
+				equalTo: "两次输入密码不一致"
+			},
+			username:{
+				required:"请输入用户名",
+				minlength: jQuery.format("至少输入3个字符"),
+				maxlength: jQuery.format("最多输入12个字符"),
+				remote:jQuery.format("用户名已经存在，请更换其他用户名")
+			}
+		},
+
+		// the errorPlacement has to take the table layout into account
+		errorPlacement: function(error, element) {
+			if ( element.is(":radio") )
+				error.appendTo( element.parent().next().next() );
+			else if ( element.is(":checkbox") )
+				error.appendTo ( element.next() );
+			else
+				error.appendTo( element.parent().next() );
+		},
+
+		success: function(label) {
+			// set &nbsp; as text for IE
+			label.html("&nbsp;").addClass("checked");
+		}
+	});
+
+});
+</script>
+
+<script language="javascript">
+$(function(){
+	var verifyimg = $(".verifyimg").attr("src");
+    $(".reloadverify").click(function(){
+        if( verifyimg.indexOf('?')>0){
+            $(".verifyimg").attr("src", verifyimg+'&random='+Math.random());
+        }else{
+            $(".verifyimg").attr("src", verifyimg.replace(/\?.*$/,'')+'?'+Math.random());
+        }
+    });
+});
+</script>
+
+
+<!--main-->
+<div class="midder">
+<div class="mc">
+<h1 class="user_tit">会员注册</h1>
+
+{% if ik_setting.ik_isinvite == 2%}
+<p>系统升级中，暂时关闭用户注册！<a href="{{ik_setting.ik_site_url}}">[返回首页]</a></p>
+{% else %}
+
+<div class="user_left">
+<form  id="signupform" method="POST" action="{{url('home/user/register')}}">
+<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="Tabletext">
+<tr>
+<td class="label"><label id="email" for="email">Email：</label></td>
+<td class="field" width="300"><input class="uinput" id="email" name="email" type="email" value="" placeholder="请输入Email" autofocus  style="width:250px"/></td>
+<td class="status"></td>
+</tr>
+<tr>
+<td class="label"><label>密码：</label></td>
+<td class="field"><input class="uinput" type="password" id="password" name="password" value=""  style="width:250px"/></td>
+<td class="status"></td>
+</tr>
+<tr>
+<td class="label"><label>重复密码：</label></td>
+<td class="field"><input class="uinput" type="password" id="repassword" name="repassword"  value="" style="width:250px"/></td>
+<td class="status"></td>
+</tr>
+
+<tr>
+<td class="label"><label>用户名：</label></td>
+<td class="field"><input class="uinput" type="text" id="username" name="username" style="width:250px" maxlength="16"/></td>
+<td class="status"></td>
+</tr>
+
+<tr><td class="label">验证码：</td><td class="field">
+<input name="authcode"  class="uinput" placeholder="请输入验证码" style="width:250px" maxlength="5"/>
+</td>
+<td class="status"></td></tr>
+
+<tr><td class="label">&nbsp;</td>
+<td class="field">
+<img class="verifyimg reloadverify" src="{{url('home/user/captcha')}}" alt="点击刷新验证码" style="cursor:pointer;" align="absmiddle">
+</td>
+<td class="status"></td></tr>
+
+<tr>
+<td class="label"></td>
+<td class="field">
+<input class="submit" type="submit" value="注册" style="margin-top:8px"/> 
+</td>
+<td class="status"></td>
+</tr>
+
+<tr>
+<td class="label"><br /></td>
+<td class="field"><br /></td> 
+<td class="status"></td>
+</tr>
+
+</table>
+</form>
+{% endif %}
+</div>
+
+<div class="aside">
+            
+	<p class="pl2">&gt; 已经拥有帐号? <a href="{{url('home/user/login')}}" rel="nofollow">直接登录</a></p>
+
+</div>
+<div class="cl"></div>
+
+</div>
+</div>

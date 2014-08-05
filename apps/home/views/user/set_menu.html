@@ -1,0 +1,12 @@
+<h1 class="set_tit">用户信息管理</h1>
+<div class="tabnav">
+<ul>
+{% for key, menu in user_menu_list%}
+	{% if key == action_name %}
+<li class="select"><a href="{{url(menu['url'])}}" >{{menu['text']}}</a></li>
+	{% else %}
+<li><a href="{{url(menu['url'])}}" >{{menu['text']}}</a></li>
+	{% endif %}
+{% endfor%}
+</ul>
+</div>

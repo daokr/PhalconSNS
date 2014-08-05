@@ -1,0 +1,38 @@
+<!--main-->
+<div class="midder">
+<div class="mc">
+
+{{partial('user/set_menu')}}
+
+	<div class="utable">
+    {% if doname is empty %}
+    <form method="POST" action="{{url('home/user/setdoname')}}" >
+    {% endif %} 
+    <table cellpadding="5" cellspacing="5">
+    <tr>
+    <th>个性域名：</th>
+    <td>
+    {% if doname is empty %}
+    {{C('ik_site_url')}}space/ <input class="txt" name="doname" value="{{doname}}" type="text" />
+    {% else %}
+    <a href="{{C('ik_site_url')}}space/{{doname}}">{{C('ik_site_url')}}space/{{doname}}</a>
+    {% endif %}
+    </td>
+    </tr>
+{% if doname is empty %}   
+    <tr>
+    <th>&nbsp;</th>
+    <td>
+	<div class="tips">域名最长15个字符，可输入英文字母 数字 和 符号( - _ )，首字符必须是英文字母一旦设置不可更改</div>
+    </td>
+    </tr>    
+    
+    <tr><th></th><td><input class="submit" type="submit" value="好了，保存"  /></td></tr>
+{% endif %}   
+    </table>
+    {% if doname is empty %}</form>{% endif %}
+    </div>
+    
+    
+</div>
+</div>

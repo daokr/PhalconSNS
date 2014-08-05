@@ -1,0 +1,68 @@
+//清楚html（css js）和php代码 输入设置
+$str = '<p>Test paragraph.</p><!-- Comment --> <a href="#fragment">Other text</a>';
+echo $this->filter->sanitize($str, "striptags") ; //Test paragraph. Other text
+
+
+//HTML 编码 入库转换
+$this->escaper->escapeHtml($maliciousTitle); 
+//则输出的是 <p>Test paragraph.</p><!-- Comment --> <a href="#fragment">Other text</a> 
+
+
+        {# e or escape filter #}
+{{ "<h1>Hello<h1>"|e }}
+{{ "<h1>Hello<h1>"|escape }}
+
+{{- post.title|e -}}
+
+
+{% set decoded='{"one":"wanglijun","two":2,"three":3}'|json_decode %}
+
+decoded00:{{decoded.one}}
+
+
+<div class="post-content">
+{%- cache "post-body-" ~ post.id -%}
+{{- markdown.render(post.content|e) -}}
+{%- endcache -%}
+</div>
+
+
+//判断字符/ 在字符串$string 中最后出现的位置 http://www.ikphp.com/ 如果不存在返回false 存在返回int
+strpos($string, '/', strlen($string)-1) // 如果存在int
+
+自动编码变量让正常输出：
+{%set robot = '<p>Test paragraph.</p><!-- Comment --> <a href="#fragment">Other text</a></title><script>alert(1)</script><style>body{background: none repeat scroll 0 0 red;}</style>'%}
+
+Manually escaped: {{ robot|e }} <br>
+{% autoescape true %}
+    Autoescaped: {{ robot }}<br>
+    {% autoescape false %}
+        No Autoescaped: {{ robot }}
+    {% endautoescape %}
+{% endautoescape %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+content 	Includes the content produced in a previous rendering stage
+get_content 	Same as ‘content’
+partial 	Dynamically loads a partial view in the current template
+super 	Render the contents of the parent block
+time 	Calls the PHP function with the same name
+date 	Calls the PHP function with the same name
+dump 	Calls the PHP function ‘var_dump’
+version 	Returns the current version of the framework
+constant 	Reads a PHP constant
+url 	Generate a URL using the ‘url’ service

@@ -1,0 +1,24 @@
+<div style="margin:200px auto; width:230px; ">
+  
+  <img style="float:left;" src="http://img3.douban.com/pics/douban_error.gif">
+  <ul style="margin-left:35px; list-style-type:none; list-style-image: none; list-style-position:outside;">
+     <li style="list-style-type:none; list-style-image:none; list-style-position:outside; font-size:14px; line-height: 32px; padding-left:5px">
+         {{content()}} 
+    </li>
+        <li style="list-style-type:none; list-style-image:none; list-style-position:outside; color:#666;">&nbsp;</li>
+        <li style="list-style-type:none; list-style-image:none; list-style-position:outside; color:#666;"> 
+        <p><span id="f3s">3</span>秒后&nbsp;<a href="{{jumpurl}}" title="点击返回">点击返回</a></p>
+     </li>
+  </ul>
+	<script type="text/javascript">
+        (function(){
+            var secs=3,si=setInterval(function(){
+                if(--secs){
+                    document.getElementById('f3s').innerHTML = secs;
+                }
+                else{
+                    location.href="{{jumpurl}}";clearInterval(si);
+                }
+        }, 1000)})();
+    </script>
+</div>

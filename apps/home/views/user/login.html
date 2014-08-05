@@ -1,0 +1,40 @@
+<link href="{{APP_STATIC_CSS}}/validate.css" rel="stylesheet" />
+<div class="midder"><!--midder-->
+<div class="mc"><!--mc-->
+<h1 class="user_tit">用户登录</h1>
+
+<div class="user_left">
+<form method="POST" action="{{url('home/user/login')}}" id="signupform">
+<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="Tabletext">
+<tr><td class="label">Email：</td><td class="field"><input class="uinput" type="email" name="email" autofocus/></td></tr>
+<tr><td class="label">密码：</td><td class="field"><input class="uinput" type="password" name="password" /></td></tr>
+
+<tr>
+<td>&nbsp;</td>
+<td class="field">
+<input type="hidden" name="ret_url" value="{{ret_url}}" />
+<input class="submit" type="submit" value="登录" style="margin-top:8px"/> 
+&nbsp;&nbsp;<a href="{{url('home/user/register')}}">还没有帐号？</a> | <a href="{{url('home/user/forgetpwd')}}">忘记密码</a>
+</td>
+</tr>
+</table>
+</form>
+	
+<div class="item item-3rd">
+<label>第三方登录：</label>
+<a href="{{url('home/oauth/index/qq')}}" target="_top">
+<img title="QQ" src="{{PUBLIC}}/images/connect_qq.png"></a>
+<a href="{{url('home/oauth/index/sina')}}" target="_top">
+<img title="新浪微博" src="{{PUBLIC}}/images/connect_sina_weibo.png"></a>
+</div>
+  
+
+</div>
+
+
+<div class="aside"></div>
+
+<div class="cl"></div>
+
+</div><!--// end mc-->
+</div><!--// end midder-->

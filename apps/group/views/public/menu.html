@@ -1,0 +1,22 @@
+<h3>menu.html 我是被映入的</h3><br>
+当前版本号:{{constant('IKPHP_SITENAME')}}{{ constant('IKPHP_VERSION')}}<br>
+
+<h3><a href="{{url('home/index')}}">首页连接</a></h3><br>
+
+自定义函数的使用: {{my('我是my输出')}}<br>
+
+<form method="post" action="{{url('group/index/index')}}">
+
+<input name="{{security.getTokenKey()}}" value="{{security.getToken()}}">
+
+<input type="submit" value="提交">
+
+</form>
+
+自定义函数的使用: {{hao('我是hao输出','gggggg','5555555555555')}}<br>
+
+ 
+
+设置session：{{session.get('identity')}}<br>
+
+获取url：<a href="{{url.get('home/index')}}">首页</a>

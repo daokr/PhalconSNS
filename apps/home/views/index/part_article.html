@@ -1,0 +1,54 @@
+<div id="anony-article" class="section">
+	<div class="wrapper">
+    	<div class="sidenav">
+			  <h2 class="section-title"><a href="{:U('article/index/index')}">阅读</a></h2>
+			  <div class="side-links nav-anon">
+			      <ul>
+					<foreach name="articleChannel" item="item">
+                    <li><a href="{:U('article/channel/index',array('nameid'=>$item['nameid']))}">{$item['name']}</a></li>  
+                    </foreach>  
+			      </ul>
+			  </div>
+		</div> 
+		
+        <div class="main">
+ 		
+        	<div class="mod">
+            
+            	<foreach name="arrArticle" item="item">
+            	<div class="artitem">
+	            	<h2 class="content-title">{$item['cname']}</h2>
+					<ul class="artlist">
+                   		<foreach name="item.alist" item="aitem">
+                        <if condition="$key eq 0">
+					    <li class="first">
+                        	
+	                    	<div class="pic">
+                               
+                                <a href="{:U('article/index/show',array('id'=>$aitem['aid']))}">
+                                    <img width="135" height="90" alt="" src="{$aitem['photo']['theimg']}">
+                                </a>
+	                        </div>
+                            
+					        <div class="cont">
+					            <h3><a title="{$aitem['title']}"  href="{:U('article/index/show',array('id'=>$aitem['aid']))}">
+                                <php> echo getsubstrutf8(clearText($aitem['title']),0,20);</php>
+                                </a>
+                                </h3>
+					            <p><php> echo getsubstrutf8(clearText($aitem['content']),0,20);</php> <a href="{:U('article/index/show',array('id'=>$aitem['aid']))}">详细</a></p>
+					        </div>
+					    </li>
+                        <else/>
+					    <li><a title="{$aitem['title']}" href="{:U('article/index/show',array('id'=>$aitem['aid']))}">
+                        <php> echo getsubstrutf8(clearText($aitem['title']),0,20);</php></a></li>
+                        </if>
+	                   </foreach>
+					</ul>
+                    
+                </div>
+                </foreach>
+
+            </div>
+        </div>   	
+    </div>
+</div>
