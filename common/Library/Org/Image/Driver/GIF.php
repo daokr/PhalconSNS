@@ -7,7 +7,7 @@
 // | Author: 小麦 <ikphp@sina.cn> <http://www.ikphp.com>
 // +----------------------------------------------------------------------
 
-namespace IKPHP\Common\Library\Org\Image\Driver;
+namespace IKPHP\Org\Image\Driver;
 
 class GIF{
 	/**

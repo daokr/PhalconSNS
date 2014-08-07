@@ -107,10 +107,6 @@ $di->set('modelsMetadata', function() use ($config) {
      }
 }, true);
 
-//公用组件
-$di->set('elements', function(){
-	return new IKPHP\Common\Library\Elements();
-});
 
 //定义分发器
 $di->set('dispatcher',function() use ($application, $di){ 

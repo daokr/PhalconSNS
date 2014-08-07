@@ -16,13 +16,7 @@ class IndexController extends FrontendController
 		$this->view->disable();
 	}
     public function indexAction(){
-
-		$user = new User();
-		$abc = $user->getOneUser(2);
 		
-		$this->view->abc = $abc;
-		
-		$this->_config_seo (); 
     }
 	
 }

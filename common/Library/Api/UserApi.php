@@ -7,7 +7,7 @@
 // | Author: 小麦 <ikphp@sina.cn> <http://www.ikphp.com>
 // +----------------------------------------------------------------------
 
-namespace IKPHP\Common\Library\Api;
+namespace IKPHP\Api;
 use Phalcon\Mvc\User\Component;
 use IKPHP\Common\Models\UcenterUser;
 

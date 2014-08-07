@@ -7,9 +7,9 @@
 // | Author: 小麦 <ikphp@sina.cn> <http://www.ikphp.com>
 // +----------------------------------------------------------------------
 
-namespace IKPHP\Common\Library\Org\Image\Driver;
+namespace IKPHP\Org\Image\Driver;
 
-use IKPHP\Common\Library\Org\Image;
+use IKPHP\Org\Image;
 
 class Gd{
     /**
@@ -61,7 +61,7 @@ class Gd{
 
         //打开图像
         if('gif' == $this->info['type']){
-            $class  =    'IKPHP\\Common\\Library\\Org\\Image\\Driver\\GIF';
+            $class  =    'IKPHP\\Org\\Image\\Driver\\GIF';
             $this->gif = new $class($imgname);
             $this->img = imagecreatefromstring($this->gif->image());
         } else {

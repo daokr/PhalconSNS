@@ -7,35 +7,28 @@
 
 namespace IKPHP\Apps\Home\Controllers;
 
-use IKPHP\Common\Library\Org\Verify as Verify;
+use IKPHP\Org\Verify as Verify;
 use IKPHP\Common\Controllers\FrontendController;
-use IKPHP\Common\Library\Api\UserApi;
+use IKPHP\Api\UserApi;
 use IKPHP\Common\Models\Area;
 use IKPHP\Common\Models\User as UserMod;
-use IKPHP\Common\Library\Org\UploadFile;
+use IKPHP\Org\UploadFile;
+use IKPHP\Apps\Home\Models\UserLevel;
+use IKPHP\Apps\Home\Models\UserScoreLog;
 
 class UserController extends FrontendController {
 	
-	public $userid;
-	
+	private $userid = 0;
+
     public function initialize()
     {
         parent::initialize();
         $this->assign('user_menu_list',$this->_init_setmenu());
     	// 访问者控制
-		if (!$this->visitor && in_array ( ACTION_NAME, array (
-				'setbase',
-				'setcity',
-				'setdoname',
-				'setface',
-				'setpassword',
-		))){
-			$this->_redirect ( 'home/user/login' );
-		} else {
+		if ($this->visitor){
 			$this->userid = $this->visitor['userid'];
 		}
-    }
-    // 访问者控制  	
+    }	
     //个人设置初始化
     protected function _init_setmenu(){
     	$menu = array ();
@@ -87,7 +80,7 @@ class UserController extends FrontendController {
 
 			/* 检测验证码 */
 			$verify = new Verify ();
-			if (! $verify->check ( $authcode, 1 )) { 
+			if (!$verify->check ( $authcode, 1 )) { 
 				return $this->error('验证码错误');
 			}
 			
@@ -156,6 +149,9 @@ class UserController extends FrontendController {
 				if($Member->login($uid)){ //登录用户
 					// 跳转到登陆前页面（执行同步操作）
 					$ret_url = $this->_post ( 'ret_url', 'trim');
+					if(empty($ret_url)){
+						return $this->_redirect('home/index/index');
+					}
 					header ( "Location: " .$ret_url);
 					exit();
 				} else {
@@ -202,6 +198,9 @@ class UserController extends FrontendController {
 		}
 	}	
 	public function setbaseAction() {
+		//访问控制
+		if(!$this->visitor){return $this->_redirect('home/user/login');}
+		
 		if (IS_POST) {
 			
 			$data ['sex'] = $this->_post('sex', 'int');
@@ -233,6 +232,8 @@ class UserController extends FrontendController {
 	}
 	//设置头像
 	public function setfaceAction(){
+		//访问控制
+		if(!$this->visitor){return $this->_redirect('home/user/login');}
 		if (IS_POST) {
 			if($this->request->hasFiles() == true){
 				//类型判断
@@ -261,7 +262,7 @@ class UserController extends FrontendController {
 				if($result){
 					
 					$imgpath = C('ik_attach_path').$result[0]['savefile'];
-					$image = new \IKPHP\Common\Library\Org\Image();
+					$image = new \IKPHP\Org\Image();
 					//打开图像生成thumb
 					try {
 						//获取配置头像大小
@@ -271,7 +272,7 @@ class UserController extends FrontendController {
 			            	$image->open($imgpath);
 			            	$thumb_name = $result[0]['filename'].'_'.$item.'_'.$item.'.'.$result[0]['ext']; //文件名
 			            	$thumb_img = C('ik_attach_path').$result[0]['savepath'].$thumb_name;//保存路径
-			            	$image->thumb($item, $item, \IKPHP\Common\Library\Org\Image::IMAGE_THUMB_FIXED)->save($thumb_img);
+			            	$image->thumb($item, $item, \IKPHP\Org\Image::IMAGE_THUMB_FIXED)->save($thumb_img);
 			            }
 			            //更新数据库
 			            $user = UserMod::findFirst("userid='$this->userid'");
@@ -301,6 +302,9 @@ class UserController extends FrontendController {
 	}
 	//设置域名
 	public function setdonameAction(){
+		//访问控制
+		if(!$this->visitor){return $this->_redirect('home/user/login');}
+				
 		$userid = $this->userid;
 		$user_mod = new UserApi;
 		$strUser = $user_mod->info($userid);
@@ -338,7 +342,7 @@ class UserController extends FrontendController {
 		}else{
 			$this->assign ( 'doname', $strUser[4] );
 			$this->_config_seo (array('title'=>'个性域名','subtitle'=>'用户'));
-		}	
+		}			
 	}
 	public function areaAction($type) {
 		$oneid = $this->_get ( 'oneid' ); 
@@ -377,9 +381,10 @@ class UserController extends FrontendController {
 	}	
 	//设置居住地
 	public function setcityAction(){
-
-		$user_mod = new UserMod();
 		
+		if(!$this->visitor){return $this->_redirect('home/user/login');}
+		
+		$user_mod = new UserMod();
 		if (IS_POST) {
 			
 			$oneid   = $this->_post('oneid','int','0');
@@ -420,6 +425,9 @@ class UserController extends FrontendController {
 	}
 	//设置居住地
 	public function setpasswordAction(){
+		
+		if(!$this->visitor){return $this->_redirect('home/user/login');}
+	
 		$userid = $this->userid;
 		if(empty($userid)){
 			return $this->error( '你应该出发去火星报到啦。','home/user/login');
@@ -458,5 +466,88 @@ class UserController extends FrontendController {
 			$this->assign('ispassword',true);
 			$this->_config_seo (array('title'=>'密码修改','subtitle'=>'用户'));
 		}
-	}			
+	}	
+
+	//找回密码服务
+	public function forgetpwdAction(){
+		if(IS_POST){
+			$user_mod = new UserMod();
+			
+			$email	= $this->_post('email',array('trim','email'));
+			$emailNum = $user_mod->findFirst("email='$email'");
+
+			if($email==''){
+				return $this->error('Email输入不能为空^_^');
+			}elseif($emailNum == false){
+				return $this->error('Email不存在，你可能还没有注册^_^');
+			}else{
+			
+				//随机MD5加密
+				$resetpwd = md5(rand()); 
+			
+				$user_mod->resetpwd = $resetpwd;
+				
+				$subject  = C('ik_site_title').'会员密码找回';
+				
+				$reseturl = C('ik_site_url').'home/user/resetpwd?mail='.$email.'&set='.$resetpwd;
+				$content = '您的登录信息：<br />Email：'.$email.'<br />重设密码链接：<br /><a href="'.$reseturl.'">'.$reseturl.'</a>';
+
+				$mailObject = new \IKPHP\Org\Mail($this->ik_setting);
+				
+				$result = $mailObject->postMail($email, $subject, $content);
+				if($result == '0'){
+					$this->error("找回密码所需信息不完整^_^");
+				}elseif($result == '1'){
+					//更新数据库
+					$user_mod->save();
+					$this->error("系统已经向你的邮箱发送了邮件，请尽快查收^_^");
+				}
+					
+			}
+		}
+		$this->_config_seo ( array (
+				'title' => '找回密码'
+		) );
+	}
+	// 用户等级
+	public function levelAction(){
+		$arrRole = UserLevel::find();
+		$this->assign('arrRole',$arrRole);
+
+		$this->_config_seo ( array (
+				'title' => '会员等级'
+		) );	
+	}
+	// 用户积分
+	public function scoreAction($id = 0){
+
+		if(!empty($id) && $id>0){
+			
+			$strUser = UserMod::findFirst("userid='$id'");
+			if($strUser){
+
+				$map = "uid='$id'";
+				$count = UserScoreLog::count("uid='$id'");
+				$pager = $this->_pager($count, 10);
+				$where = array(
+							"uid='$id'",
+				 			"order" => "add_time", 
+				 			"limit" => array("number"=>$pager->listRows, 'offset'=>$pager->firstRow)
+				);
+				$list  = UserScoreLog::find($where);
+				//var_dump($list);
+				$this->assign('list',$list);
+				$this->assign('pageUrl', $pager->show());
+				
+				$this->_config_seo ( array (
+						'title' => $strUser->username.'的积分'
+				) );
+			
+			}else{
+				$this->error('系统不存在的用户');
+			}			
+		}else{
+			return $this->error('无法查看该用户的积分');
+		}
+	}	
 }

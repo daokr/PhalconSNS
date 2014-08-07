@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 
 
-namespace IKPHP\Common\Library\Org;
+namespace IKPHP\Org;
 use Phalcon\Mvc\User\Component;
 
 class UploadFile extends Component{

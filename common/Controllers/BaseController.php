@@ -212,5 +212,17 @@ class BaseController extends Controller {
 		 ));
 		 $this->flash->success($message);
     }
-
+    /**
+     * 全站统一分页方法
+     * @param string $count 总的记录数
+     * @param string $pagesize 每页显示记录数
+     */
+    protected function _pager($count, $pagesize, $pageurl = '') {
+    	$pager = new \IKPHP\Org\Paginator($count, $pagesize, $pageurl);
+    	$pager->rollPage = 5;
+    	$pager->setConfig('prev', '<前页');
+    	$pager->setConfig('next', '后页>');
+    	$pager->setConfig('theme', '%UP_PAGE% %FIRST% %LINK_PAGE% %END% %DOWN_PAGE%');
+    	return $pager;
+    } 
 }

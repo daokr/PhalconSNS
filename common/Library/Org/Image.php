@@ -7,7 +7,7 @@
 // | Author: 小麦 <ikphp@sina.cn> <http://www.ikphp.com>
 // +----------------------------------------------------------------------
 
-namespace IKPHP\Common\Library\Org;
+namespace IKPHP\Org;
 
 class Image{
     /* 驱动相关常量定义 */
@@ -60,7 +60,7 @@ class Image{
         }
 
         /* 引入处理库，实例化图片处理对象 */
-        $class  =    "IKPHP\\Common\\Library\\Org\\Image\\Driver\\{$class}";
+        $class  =    "IKPHP\\Org\\Image\\Driver\\{$class}";
         $this->img = new $class($imgname);
     }
 

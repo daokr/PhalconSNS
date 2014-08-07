@@ -282,12 +282,13 @@ a.bn-post:hover span{background-color:#63AB1A; border: 1px solid #50950E;}
 
 /*分页*/
 .page { font: 14px Arial, Helvetica, sans-serif; color: #aaa; margin: 20px 0; line-height: 150%; text-align: center; }
-.page a, .thispage, .break { padding: 0px 4px;margin:2px; }
+.page a, .thispage, .break { padding: 0px 5px; margin:2px 4px; }
 .page .prev { margin-right: 20px; }
 .page .next { margin-left: 20px; }
 .page .next a,.page .prev a {padding:0;margin:0}
 .page .count { margin-left: 20px; font-size: 14px; }
 .page .thispage {color:#fff;background:#83BF73;}
+.page .current{ background:#83BF73;color: #fff; padding: 0px 5px; margin:2px 4px; }
 .page .break {color:#999}
 .page .thispage {color:#fff;background:#83BF73;}
 .page .break {color:#999}

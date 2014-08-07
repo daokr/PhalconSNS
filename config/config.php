@@ -3,7 +3,13 @@ return new \Phalcon\Config(array(
 	'database' => require __DIR__.'/db.php',
 	'application' => array(
 		'debug' => true,//是否是开发调试；如果是 那么记录数据库日志
+
 		'commmonDir'     => __DIR__ . '/../common/',
+		'vendorDir'     => __DIR__ . '/../common/Library/Vendor/', //第三方库
+		'orgDir'     => __DIR__ . '/../common/Library/Org/', //公用库
+		'apiDir'     => __DIR__ . '/../common/Library/Api/', //api类
+		'pluginsDir'     => __DIR__ . '/../common/Plugins/', //插件库
+
 		'voltDir'   => __DIR__ . '/../runtime/cache/volt/',//编译模板cache
 		'cacheviewDir'   => __DIR__ . '/../runtime/cache/views/',//静态化cache	
 		'baseUri'        => '/phalconcms/'

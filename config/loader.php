@@ -3,7 +3,13 @@ $loader = new \Phalcon\Loader();
 
 //注册公用组件目录
 $loader->registerNamespaces(array(
-          "IKPHP\Common"    => $config->application->commmonDir,
+
+'IKPHP\Common'    => $config->application->commmonDir,
+'IKPHP\Vendor'    => $config->application->vendorDir,
+'IKPHP\Org'       => $config->application->orgDir,
+'IKPHP\Api'       => $config->application->apiDir,
+'IKPHP\Plugins'       => $config->application->pluginsDir,
+
 ));
 
 $eventsManager = new \Phalcon\Events\Manager();

@@ -46,15 +46,37 @@ $router->add(
 );
 
 $router->add(
-    "/:module/:controller/:action/id/:int/p/:int",
+    "/:module/:controller/:action/id/:int",
     array(
      	'module' => 1,
         "controller" => 2,
         "action"     => 3,
         "id"         => 4,
-    	"p"         => 5,
     )
 );
+
+$router->add(
+    "/:module/:controller/:action/:int/page/:int",
+    array(
+     	'module' => 1,
+        "controller" => 2,
+        "action"     => 3,
+        "id"         => 4,
+    	"page"         => 5,
+    )
+);
+$router->add(
+    "/:module/:controller/:action/id/:int/page/:int",
+    array(
+     	'module' => 1,
+        "controller" => 2,
+        "action"     => 3,
+        "id"         => 4,
+    	"page"         => 5,
+    )
+);
+
+
 //个人空间
 $router->add(
     "/space/{id:[a-zA-Z0-9\-_]{0,14}}",

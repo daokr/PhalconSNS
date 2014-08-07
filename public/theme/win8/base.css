@@ -289,6 +289,7 @@ box-shadow:0 1px 3px rgba(100,100,100,.3);-moz-box-shadow:0 1px 3px rgba(100,100
 .page .next a,.page .prev a {padding:0;margin:0}
 .page .count { margin-left: 20px; font-size: 14px; }
 .page .thispage {color:#fff;background:#83BF73;}
+.page .current{ background:#83BF73;color: #fff; padding: 0px 5px; margin:2px; }
 .page .break {color:#999}
 .page .thispage {color:#fff;background:#83BF73;}
 .page .break {color:#999}

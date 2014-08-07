@@ -5,13 +5,14 @@
 * @小麦 修改时间2014年3月19日晚 用户基础类
 */
 namespace IKPHP\Common\Models;
-use IKPHP\Common\Library\Api\UserApi;
+use IKPHP\Api\UserApi;
 use \Phalcon\Mvc\Model\Message as Message;
 use IKPHP\Common\Models\Setting;
 
 class User extends BaseModel
 {
 	public $userid;
+	public $username;
 	
     public function getSource()
     {
